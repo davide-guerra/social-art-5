@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SubscriptionController;
+use Laravel\Jetstream\Http\Controllers\Livewire\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Rename the 'profile' route create by Jetstream in 'settings'
+Route::group(['middleware' => config('jetstream.middleware', ['web'])], function () {
+    Route::get('/user/settings', [UserProfileController::class, 'show'])
+        ->name('profile.show')
+        ->middleware(['auth', 'verified']);
+});
+
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     // Rotte per la sottoscrizione
     Route::get('/subscription', [SubscriptionController::class, 'create'])->name('subscription.create');
@@ -31,8 +39,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
         // Qui puoi aggiungere altre rotte che richiedono una sottoscrizione attiva
         // Per esempio:
-        // Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
-        // Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        /* Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+        Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update'); */
         // Route::get('/artworks', [ArtworkController::class, 'index'])->name('artworks.index');
         // Route::post('/artworks', [ArtworkController::class, 'store'])->name('artworks.store');
         Route::get('/subscription/change', [SubscriptionController::class, 'showChangePlan'])->name('subscription.change');

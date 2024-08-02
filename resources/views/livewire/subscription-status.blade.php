@@ -27,10 +27,10 @@
 
             @if($nextPayment && $nextPaymentAmount !== null)
                 <div class="text-sm text-gray-600 mt-2">
-                    {{ __('Next payment') }}: {{ $nextPayment->format('F j, Y') }} - ${{ sprintf('%.2f', $nextPaymentAmount / 100) }}
-                    @if ($prorationValue)
+                    {{ __('Your subscription will renew on') }}: {{ $nextPayment->format('F j, Y') }}
+                    {{-- @if ($prorationValue)
                         (proration: ${{ sprintf('%.2f', $prorationValue / 100) }})
-                    @endif
+                    @endif --}}
                 </div>
             @endif
 
@@ -65,9 +65,9 @@
                 <div class="mt-4 space-y-2">
                     @foreach ($invoices as $invoice)
                         <div class="flex justify-between">
-                            <div>{{ $invoice['date'] }}</div>
-                            <div>{{ $invoice['total'] }}</div>
-                            <div>
+                            <div class="text-sm text-gray-600">{{ $invoice['date'] }}</div>
+                            <div class="text-sm text-gray-600">{{ $invoice['total'] }}</div>
+                            <div class="text-sm text-gray-600">
                                 <a href="{{ $invoice['url'] }}" target="_blank" class="text-blue-600 hover:text-blue-900">
                                     {{ ('View') }}
                                 </a>
